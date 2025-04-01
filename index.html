@@ -4,335 +4,37 @@
     <title>بەرهەمهێنەری تێکستی کوردی</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary-color: #10b981;
-            --secondary-hover: #059669;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --border-radius: 8px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            direction: rtl;
-            font-family: 'Rubik', Arial, sans-serif;
-            background-color: #f9fafb;
-            color: var(--gray-800);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        h1 {
-            color: var(--gray-800);
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-        
-        .options-group {
-            margin-bottom: 25px;
-            background: var(--gray-100);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .option-row {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .option-item {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--gray-700);
-        }
-        
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            background-color: white;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23374151'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 12px center;
-            background-size: 16px;
-        }
-        
-        select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--border-radius);
-            font-family: inherit;
-            font-size: 1rem;
-            resize: vertical;
-            transition: border-color 0.3s;
-            margin-bottom: 20px;
-        }
-        
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        
-        button {
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 500;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        button.primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        button.primary:hover {
-            background-color: var(--primary-hover);
-        }
-        
-        button.secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        button.secondary:hover {
-            background-color: var(--secondary-hover);
-        }
-        
-        .result-container {
-            margin-top: 25px;
-            position: relative;
-        }
-        
-        #result {
-            padding: 20px;
-            background-color: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--border-radius);
-            min-height: 150px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            overflow: auto;
-            box-shadow: var(--shadow-sm);
-            line-height: 1.8;
-        }
-        
-        .btn-copy {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: var(--gray-100);
-            color: var(--gray-700);
-            padding: 8px 15px;
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            display: none;
-        }
-        
-        .btn-copy:hover {
-            background-color: var(--gray-200);
-        }
-        
-        .copy-success {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 15px;
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-        
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray-700);
-            padding: 20px;
-        }
-        
-        .loading::after {
-            content: "";
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--gray-300);
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            margin-right: 10px;
-            animation: spin 1s linear infinite;
-        }
-        
-        .branding {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: var(--gray-700);
-        }
-        
-        .footer-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .footer-link:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* ڕێکخستنی گشتی بۆ دەوایسی مۆبایل */
-        @media (max-width: 768px) {
-            .container {
-                margin: 15px;
-                padding: 20px;
-            }
-            
-            .option-row {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .option-item {
-                min-width: 100%;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-                margin-bottom: 20px;
-            }
-        }
+        body { direction: rtl; font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        textarea { width: 100%; height: 120px; margin-bottom: 10px; padding: 10px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        #result { margin-top: 20px; border: 1px solid #ddd; padding: 15px; min-height: 120px; }
+        .loading { color: gray; }
+        select { padding: 8px; margin-bottom: 10px; width: 100%; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>بەرهەمهێنەری تێکستی کوردی</h1>
         
-        <div class="options-group">
-            <div class="option-row">
-                <div class="option-item">
-                    <label for="type">جۆری نووسین:</label>
-                    <select id="type">
-                        <option value="story">چیرۆکی کورت</option>
-                        <option value="social">پۆستی سۆشیال میدیا</option>
-                        <option value="email">نامەی فەرمی</option>
-                        <option value="summary">پوختکردنەوە</option>
-                    </select>
-                </div>
-                <div class="option-item">
-                    <label for="length">درێژی تێکست:</label>
-                    <select id="length">
-                        <option value="short">کورت</option>
-                        <option value="medium" selected>مامناوەند</option>
-                        <option value="long">درێژ</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="option-row">
-                <div class="option-item">
-                    <label for="style">شێوازی نووسین:</label>
-                    <select id="style">
-                        <option value="normal" selected>ئاسایی</option>
-                        <option value="formal">ڕەسمی</option>
-                        <option value="creative">داهێنەرانە</option>
-                        <option value="simple">سادە</option>
-                    </select>
-                </div>
-                <div class="option-item">
-                    <label for="tone">ڕەنگدانەوەی دەق:</label>
-                    <select id="tone">
-                        <option value="neutral" selected>بێلایەن</option>
-                        <option value="positive">ئەرێنی</option>
-                        <option value="professional">پرۆفێشناڵ</option>
-                        <option value="friendly">دۆستانە</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        <label for="type">جۆری نووسین هەڵبژێرە:</label>
+        <select id="type">
+            <option value="story">چیرۆکی کورت</option>
+            <option value="social">پۆستی سۆشیال میدیا</option>
+            <option value="email">نامەی فەرمی</option>
+            <option value="summary">پوختکردنەوە</option>
+        </select>
         
         <label for="prompt">داواکارییەکەت بنووسە:</label>
         <textarea id="prompt" placeholder="بۆ نموونە: چیرۆکێکی کورت بنووسە لەسەر بەهاری کوردستان..."></textarea>
         
-        <button class="secondary" onclick="generateText()">بەرهەمهێنان</button>
+        <button onclick="generateText()">بەرهەمهێنان</button>
         
-        <div class="result-container">
-            <div id="result"></div>
-            <div class="copy-success" id="copy-notification">کۆپی کرا!</div>
-            <button class="btn-copy" onclick="copyResult()" id="copy-btn" style="display: none;">کۆپی کردن</button>
-        </div>
+        <div id="result"></div>
         
-        <p class="branding">
-            <a href="#" onclick="showSubscribe()" class="footer-link">بەشداری بکە بۆ دەستکەوتنی خزمەتگوزاری زیاتر</a> | 
-            <a href="#" onclick="showContact()" class="footer-link">پەیوەندیمان پێوە بکە</a>
+        <p style="margin-top: 30px; font-size: 0.8em;">
+            <a href="#" onclick="showSubscribe()">بەشداری بکە بۆ دەستکەوتنی خزمەتگوزاری زیاتر</a>
         </p>
     </div>
     
@@ -340,64 +42,30 @@
         async function generateText() {
             const prompt = document.getElementById('prompt').value;
             const type = document.getElementById('type').value;
-            const length = document.getElementById('length').value;
-            const style = document.getElementById('style').value;
-            const tone = document.getElementById('tone').value;
             const resultDiv = document.getElementById('result');
-            const copyBtn = document.getElementById('copy-btn');
             
             if (!prompt.trim()) {
                 resultDiv.innerHTML = "تکایە داواکارییەک بنووسە";
-                copyBtn.style.display = 'none';
                 return;
             }
             
             resultDiv.innerHTML = "<div class='loading'>چاوەڕوان بە، تێکست بەرهەم دەهێنرێت...</div>";
-            copyBtn.style.display = 'none';
             
-            // ئەمە API key-ەکەتە
+            // ئەمە API key-ەکەتە - دڵنیا بە لە شوێنێکی ئاساییشی هەڵی بگریت
             const API_KEY = "3ckicVpDyj82BoTKKoRWCURgRB59J22d";
             
             try {
                 let systemPrompt;
-                let maxTokens;
                 
-                // دیاریکردنی درێژی تێکست
-                if (length === "short") {
-                    maxTokens = 200;
-                } else if (length === "medium") {
-                    maxTokens = 500;
-                } else if (length === "long") {
-                    maxTokens = 1000;
-                }
-                
-                // دروستکردنی پرۆمپتی جیاواز بە پێی جۆری تێکست و شێواز و ڕەنگدانەوە
-                let styleGuide = "";
-                if (style === "formal") {
-                    styleGuide += " بە شێوازێکی ڕەسمی و پرۆفێشناڵ بنووسە.";
-                } else if (style === "creative") {
-                    styleGuide += " بە شێوازێکی داهێنەرانە و جوان بنووسە.";
-                } else if (style === "simple") {
-                    styleGuide += " بە شێوازێکی سادە و ڕوون بنووسە.";
-                }
-                
-                let toneGuide = "";
-                if (tone === "positive") {
-                    toneGuide += " ڕەنگدانەوەی دەق ئەرێنی و هاندەر بێت.";
-                } else if (tone === "professional") {
-                    toneGuide += " ڕەنگدانەوەی دەق پرۆفێشناڵ و ئەکادیمی بێت.";
-                } else if (tone === "friendly") {
-                    toneGuide += " ڕەنگدانەوەی دەق دۆستانە و نزیک بێت.";
-                }
-                
+                // دروستکردنی پرۆمپتی جیاواز بە پێی جۆری تێکست
                 if (type === "story") {
-                    systemPrompt = `تۆ نووسەرێکی کوردی لێهاتوویت. چیرۆکێکی کورت بە زمانی کوردی دەنووسیت بە شێوازێکی سەرنجڕاکێش. چیرۆکەکە دەستپێک، ناوەڕۆک و کۆتایی هەبێت.${styleGuide}${toneGuide}`;
+                    systemPrompt = "تۆ نووسەرێکی کوردی لێهاتوویت. چیرۆکێکی کورت بە زمانی کوردی دەنووسیت بە شێوازێکی سەرنجڕاکێش. چیرۆکەکە دەستپێک، ناوەڕۆک و کۆتایی هەبێت.";
                 } else if (type === "social") {
-                    systemPrompt = `تۆ پسپۆڕی سۆشیال میدیایت و دەبێت پۆستێکی کاریگەر و کورت بە زمانی کوردی بنووسیت کە سەرنجی خەڵک ڕادەکێشێت.${styleGuide}${toneGuide}`;
+                    systemPrompt = "تۆ پسپۆڕی سۆشیال میدیایت و دەبێت پۆستێکی کاریگەر و کورت بە زمانی کوردی بنووسیت کە سەرنجی خەڵک ڕادەکێشێت.";
                 } else if (type === "email") {
-                    systemPrompt = `تۆ پسپۆڕی نووسینی نامەی فەرمی بە زمانی کوردیت. دەبێت نامەیەکی فەرمی پرۆفێشناڵ بنووسیت بە فۆرماتی گونجاو.${styleGuide}${toneGuide}`;
+                    systemPrompt = "تۆ پسپۆڕی نووسینی نامەی فەرمی بە زمانی کوردیت. دەبێت نامەیەکی فەرمی پرۆفێشناڵ بنووسیت بە فۆرماتی گونجاو.";
                 } else if (type === "summary") {
-                    systemPrompt = `تۆ پسپۆڕی پوختکردنەوەی دەقی کوردیت. پوختەیەکی باش لە تێکستەکە دروست بکە کە خاڵە گرنگەکان لەخۆ بگرێت.${styleGuide}${toneGuide}`;
+                    systemPrompt = "تۆ پسپۆڕی پوختکردنەوەی دەقی کوردیت. پوختەیەکی باش لە تێکستەکە دروست بکە کە خاڵە گرنگەکان لەخۆ بگرێت.";
                 }
                 
                 // ناردنی داواکاری بۆ API-ی Mistral
@@ -408,13 +76,12 @@
                         "Authorization": `Bearer ${API_KEY}`
                     },
                     body: JSON.stringify({
-                        model: "mistral-tiny",
+                        model: "mistral-tiny", // یان هەر مۆدێلێکی تر کە بەردەستە
                         messages: [
                             { role: "system", content: systemPrompt },
                             { role: "user", content: prompt }
                         ],
-                        temperature: 0.7,
-                        max_tokens: maxTokens
+                        temperature: 0.7
                     })
                 });
                 
@@ -422,8 +89,6 @@
                 
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     resultDiv.innerHTML = data.choices[0].message.content.replace(/\n/g, "<br>");
-                    resultDiv.classList.add('fade-in');
-                    copyBtn.style.display = 'block';
                 } else {
                     resultDiv.innerHTML = "هەڵەیەک ڕوویدا: وەڵامی API گونجاو نییە";
                     console.error("API Response:", data);
@@ -435,34 +100,8 @@
             }
         }
         
-        function copyResult() {
-            const resultDiv = document.getElementById('result');
-            const notification = document.getElementById('copy-notification');
-            
-            // دروستکردنی تێکستێک لە ناوەڕۆکی div کە تاگەکانی HTML لەخۆ نەگرێت
-            const text = resultDiv.innerText;
-            
-            // کۆپیکردنی تێکست بۆ کلیپبۆرد
-            navigator.clipboard.writeText(text).then(function() {
-                // پیشاندانی نۆتیفیکەیشن
-                notification.style.display = 'block';
-                
-                // شاردنەوەی نۆتیفیکەیشن دوای 2 چرکە
-                setTimeout(function() {
-                    notification.style.display = 'none';
-                }, 2000);
-            })
-            .catch(function(err) {
-                console.error('کێشە لە کۆپی کردن:', err);
-            });
-        }
-        
         function showSubscribe() {
             alert("بەم زووانە دەتوانیت بەشداری بکەیت بۆ دەستکەوتنی خزمەتگوزاری زیاتر!");
-        }
-        
-        function showContact() {
-            alert("بۆ پەیوەندی: info@kurdish-text-generator.com");
         }
     </script>
 </body>
