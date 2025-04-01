@@ -5,36 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { direction: rtl; font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        textarea { width: 100%; height: 120px; margin-bottom: 10px; padding: 10px; }
-        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
-        #result { margin-top: 20px; border: 1px solid #ddd; padding: 15px; min-height: 120px; }
+        body { direction: rtl; font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 850px; margin: 0 auto; padding: 25px; box-shadow: 0 0 15px rgba(0,0,0,0.1); background-color: white; border-radius: 10px; }
+        textarea { width: 100%; height: 120px; margin-bottom: 15px; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; transition: background 0.3s; }
+        button:hover { background: #45a049; }
+        .btn-copy { background: #2196F3; margin-right: 10px; }
+        .btn-copy:hover { background: #0b7dda; }
+        #result { margin-top: 20px; border: 1px solid #ddd; padding: 20px; min-height: 120px; border-radius: 5px; background-color: #f9f9f9; position: relative; }
         .loading { color: gray; }
-        select { padding: 8px; margin-bottom: 10px; width: 100%; }
+        select { padding: 10px; margin-bottom: 15px; width: 100%; border-radius: 5px; border: 1px solid #ddd; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        .options-group { margin-bottom: 20px; }
+        .option-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .option-item { flex: 1; }
+        .copy-success { position: absolute; top: 5px; left: 10px; background: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px; font-size: 0.8em; display: none; }
+        .branding { text-align: center; margin-top: 30px; font-size: 0.8em; color: #666; }
+        .result-container { position: relative; }
+        .footer-link { color: #2196F3; text-decoration: none; }
+        .footer-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>بەرهەمهێنەری تێکستی کوردی</h1>
+        <h1 style="text-align: center;">بەرهەمهێنەری تێکستی کوردی</h1>
         
-        <label for="type">جۆری نووسین هەڵبژێرە:</label>
-        <select id="type">
-            <option value="story">چیرۆکی کورت</option>
-            <option value="social">پۆستی سۆشیال میدیا</option>
-            <option value="email">نامەی فەرمی</option>
-            <option value="summary">پوختکردنەوە</option>
-        </select>
+        <div class="options-group">
+            <div class="option-row">
+                <div class="option-item">
+                    <label for="type">جۆری نووسین:</label>
+                    <select id="type">
+                        <option value="story">چیرۆکی کورت</option>
+                        <option value="social">پۆستی سۆشیال میدیا</option>
+                        <option value="email">نامەی فەرمی</option>
+                        <option value="summary">پوختکردنەوە</option>
+                    </select>
+                </div>
+                <div class="option-item">
+                    <label for="length">درێژی تێکست:</label>
+                    <select id="length">
+                        <option value="short">کورت</option>
+                        <option value="medium" selected>مامناوەند</option>
+                        <option value="long">درێژ</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="option-row">
+                <div class="option-item">
+                    <label for="style">شێوازی نووسین:</label>
+                    <select id="style">
+                        <option value="normal" selected>ئاسایی</option>
+                        <option value="formal">ڕەسمی</option>
+                        <option value="creative">داهێنەرانە</option>
+                        <option value="simple">سادە</option>
+                    </select>
+                </div>
+                <div class="option-item">
+                    <label for="tone">ڕەنگدانەوەی دەق:</label>
+                    <select id="tone">
+                        <option value="neutral" selected>بێلایەن</option>
+                        <option value="positive">ئەرێنی</option>
+                        <option value="professional">پرۆفێشناڵ</option>
+                        <option value="friendly">دۆستانە</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         
         <label for="prompt">داواکارییەکەت بنووسە:</label>
         <textarea id="prompt" placeholder="بۆ نموونە: چیرۆکێکی کورت بنووسە لەسەر بەهاری کوردستان..."></textarea>
         
         <button onclick="generateText()">بەرهەمهێنان</button>
         
-        <div id="result"></div>
+        <div class="result-container">
+            <div id="result"></div>
+            <div class="copy-success" id="copy-notification">کۆپی کرا!</div>
+            <button class="btn-copy" onclick="copyResult()" id="copy-btn" style="display: none;">کۆپی کردن</button>
+        </div>
         
-        <p style="margin-top: 30px; font-size: 0.8em;">
-            <a href="#" onclick="showSubscribe()">بەشداری بکە بۆ دەستکەوتنی خزمەتگوزاری زیاتر</a>
+        <p class="branding">
+            <a href="#" onclick="showSubscribe()" class="footer-link">بەشداری بکە بۆ دەستکەوتنی خزمەتگوزاری زیاتر</a> | 
+            <a href="#" onclick="showContact()" class="footer-link">پەیوەندیمان پێوە بکە</a>
         </p>
     </div>
     
@@ -42,30 +94,64 @@
         async function generateText() {
             const prompt = document.getElementById('prompt').value;
             const type = document.getElementById('type').value;
+            const length = document.getElementById('length').value;
+            const style = document.getElementById('style').value;
+            const tone = document.getElementById('tone').value;
             const resultDiv = document.getElementById('result');
+            const copyBtn = document.getElementById('copy-btn');
             
             if (!prompt.trim()) {
                 resultDiv.innerHTML = "تکایە داواکارییەک بنووسە";
+                copyBtn.style.display = 'none';
                 return;
             }
             
             resultDiv.innerHTML = "<div class='loading'>چاوەڕوان بە، تێکست بەرهەم دەهێنرێت...</div>";
+            copyBtn.style.display = 'none';
             
             // ئەمە API key-ەکەتە
             const API_KEY = "3ckicVpDyj82BoTKKoRWCURgRB59J22d";
             
             try {
                 let systemPrompt;
+                let maxTokens;
                 
-                // دروستکردنی پرۆمپتی جیاواز بە پێی جۆری تێکست
+                // دیاریکردنی درێژی تێکست
+                if (length === "short") {
+                    maxTokens = 200;
+                } else if (length === "medium") {
+                    maxTokens = 500;
+                } else if (length === "long") {
+                    maxTokens = 1000;
+                }
+                
+                // دروستکردنی پرۆمپتی جیاواز بە پێی جۆری تێکست و شێواز و ڕەنگدانەوە
+                let styleGuide = "";
+                if (style === "formal") {
+                    styleGuide += " بە شێوازێکی ڕەسمی و پرۆفێشناڵ بنووسە.";
+                } else if (style === "creative") {
+                    styleGuide += " بە شێوازێکی داهێنەرانە و جوان بنووسە.";
+                } else if (style === "simple") {
+                    styleGuide += " بە شێوازێکی سادە و ڕوون بنووسە.";
+                }
+                
+                let toneGuide = "";
+                if (tone === "positive") {
+                    toneGuide += " ڕەنگدانەوەی دەق ئەرێنی و هاندەر بێت.";
+                } else if (tone === "professional") {
+                    toneGuide += " ڕەنگدانەوەی دەق پرۆفێشناڵ و ئەکادیمی بێت.";
+                } else if (tone === "friendly") {
+                    toneGuide += " ڕەنگدانەوەی دەق دۆستانە و نزیک بێت.";
+                }
+                
                 if (type === "story") {
-                    systemPrompt = "تۆ نووسەرێکی کوردی لێهاتوویت. چیرۆکێکی کورت بە زمانی کوردی دەنووسیت بە شێوازێکی سەرنجڕاکێش. چیرۆکەکە دەستپێک، ناوەڕۆک و کۆتایی هەبێت.";
+                    systemPrompt = `تۆ نووسەرێکی کوردی لێهاتوویت. چیرۆکێکی کورت بە زمانی کوردی دەنووسیت بە شێوازێکی سەرنجڕاکێش. چیرۆکەکە دەستپێک، ناوەڕۆک و کۆتایی هەبێت.${styleGuide}${toneGuide}`;
                 } else if (type === "social") {
-                    systemPrompt = "تۆ پسپۆڕی سۆشیال میدیایت و دەبێت پۆستێکی کاریگەر و کورت بە زمانی کوردی بنووسیت کە سەرنجی خەڵک ڕادەکێشێت.";
+                    systemPrompt = `تۆ پسپۆڕی سۆشیال میدیایت و دەبێت پۆستێکی کاریگەر و کورت بە زمانی کوردی بنووسیت کە سەرنجی خەڵک ڕادەکێشێت.${styleGuide}${toneGuide}`;
                 } else if (type === "email") {
-                    systemPrompt = "تۆ پسپۆڕی نووسینی نامەی فەرمی بە زمانی کوردیت. دەبێت نامەیەکی فەرمی پرۆفێشناڵ بنووسیت بە فۆرماتی گونجاو.";
+                    systemPrompt = `تۆ پسپۆڕی نووسینی نامەی فەرمی بە زمانی کوردیت. دەبێت نامەیەکی فەرمی پرۆفێشناڵ بنووسیت بە فۆرماتی گونجاو.${styleGuide}${toneGuide}`;
                 } else if (type === "summary") {
-                    systemPrompt = "تۆ پسپۆڕی پوختکردنەوەی دەقی کوردیت. پوختەیەکی باش لە تێکستەکە دروست بکە کە خاڵە گرنگەکان لەخۆ بگرێت.";
+                    systemPrompt = `تۆ پسپۆڕی پوختکردنەوەی دەقی کوردیت. پوختەیەکی باش لە تێکستەکە دروست بکە کە خاڵە گرنگەکان لەخۆ بگرێت.${styleGuide}${toneGuide}`;
                 }
                 
                 // ناردنی داواکاری بۆ API-ی Mistral
@@ -81,7 +167,8 @@
                             { role: "system", content: systemPrompt },
                             { role: "user", content: prompt }
                         ],
-                        temperature: 0.7
+                        temperature: 0.7,
+                        max_tokens: maxTokens
                     })
                 });
                 
@@ -89,6 +176,7 @@
                 
                 if (data.choices && data.choices[0] && data.choices[0].message) {
                     resultDiv.innerHTML = data.choices[0].message.content.replace(/\n/g, "<br>");
+                    copyBtn.style.display = 'inline-block';
                 } else {
                     resultDiv.innerHTML = "هەڵەیەک ڕوویدا: وەڵامی API گونجاو نییە";
                     console.error("API Response:", data);
@@ -100,8 +188,34 @@
             }
         }
         
+        function copyResult() {
+            const resultDiv = document.getElementById('result');
+            const notification = document.getElementById('copy-notification');
+            
+            // دروستکردنی تێکستێک لە ناوەڕۆکی div کە تاگەکانی HTML لەخۆ نەگرێت
+            const text = resultDiv.innerText;
+            
+            // کۆپیکردنی تێکست بۆ کلیپبۆرد
+            navigator.clipboard.writeText(text).then(function() {
+                // پیشاندانی نۆتیفیکەیشن
+                notification.style.display = 'block';
+                
+                // شاردنەوەی نۆتیفیکەیشن دوای 2 چرکە
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                }, 2000);
+            })
+            .catch(function(err) {
+                console.error('کێشە لە کۆپی کردن:', err);
+            });
+        }
+        
         function showSubscribe() {
             alert("بەم زووانە دەتوانیت بەشداری بکەیت بۆ دەستکەوتنی خزمەتگوزاری زیاتر!");
+        }
+        
+        function showContact() {
+            alert("بۆ پەیوەندی: info@kurdish-text-generator.com");
         }
     </script>
 </body>
